@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Samuel Akinade: Computer Network and Cybersecurity student at Thompson Rivers University, open to an 8-month IT, networking or security co-op from January 2027.">
+<title>Samuel Akinade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112..125,500..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: a traceroute. Career hops run top to bottom like packets toward the next network, projects and toolkit follow as the payload. */
+:root {
+  --paper: #eef1f4;
+  --panel: #ffffff;
+  --ink: #0f1b2d;
+  --ink-soft: #4a5768;
+  --rule: #cfd6df;
+  --signal: #c97a12;      /* hi-vis amber: alert severity, safety vest */
+  --signal-soft: #f6e3c4;
+  --link: #1f5f8b;
+  --ok: #1f7a55;
+  --display: "Archivo", "Arial Black", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0d1522; --panel: #131e2f; --ink: #e6ebf2; --ink-soft: #9aa7b8;
+    --rule: #26344a; --signal: #f0a948; --signal-soft: #3a2a12; --link: #7fb8e0; --ok: #5fcf9d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0d1522; --panel: #131e2f; --ink: #e6ebf2; --ink-soft: #9aa7b8;
+  --rule: #26344a; --signal: #f0a948; --signal-soft: #3a2a12; --link: #7fb8e0; --ok: #5fcf9d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.0625rem/1.65 var(--body);
+  margin: 0;
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+a { color: var(--link); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+.label {
+  font: 500 0.75rem/1.2 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- Top bar ---------- */
+.bar {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.bar .handle { font: 600 0.9rem var(--mono); }
+.bar nav { display: flex; gap: 18px; flex-wrap: wrap; }
+.bar nav a { color: var(--ink); text-decoration: none; font: 500 0.85rem var(--mono); }
+.bar nav a:hover { color: var(--signal); }
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 48px; align-items: end;
+  padding-block: 64px 48px;
+}
+.status {
+  display: inline-flex; align-items: center; gap: 10px;
+  font: 500 0.8rem var(--mono);
+  background: var(--signal-soft); color: var(--ink);
+  border: 1px solid var(--signal);
+  padding: 6px 12px; border-radius: 999px;
+}
+.pulse { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 0 var(--ok); animation: pulse 2.2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 60%, transparent); } 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.hero h1 {
+  font-stretch: 125%; font-weight: 900;
+  font-size: clamp(2.6rem, 7vw, 5.2rem); line-height: 0.95; letter-spacing: -0.02em;
+  margin-top: 22px;
+}
+.hero h1 span { display: block; color: var(--signal); }
+.hero p.lede { font-size: 1.2rem; max-width: 34ch; margin: 22px 0 0; color: var(--ink-soft); }
+.hero p.lede strong { color: var(--ink); }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 600 0.9rem var(--mono); text-decoration: none;
+  padding: 11px 16px; border-radius: 8px;
+  border: 1.5px solid var(--ink); color: var(--ink); background: transparent; cursor: pointer;
+}
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn:hover { border-color: var(--signal); }
+.btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* Ping card in hero */
+.ping {
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 12px;
+  padding: 18px 18px 14px; font-family: var(--mono); font-size: 0.82rem; min-width: 0;
+}
+.ping .head { display: flex; justify-content: space-between; gap: 8px; color: var(--ink-soft); }
+.ping canvas { width: 100%; height: 110px; display: block; margin-top: 10px; }
+.ping .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; font-variant-numeric: tabular-nums; }
+.ping .stats b { display: block; font-size: 1.15rem; color: var(--ink); font-weight: 600; }
+.ping .stats span { color: var(--ink-soft); font-size: 0.72rem; }
+
+/* ---------- Sections ---------- */
+section { padding-block: 56px; border-top: 1px solid var(--rule); }
+.sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+.sec-head h2 { font-stretch: 112%; font-weight: 800; font-size: clamp(1.7rem, 3.6vw, 2.4rem); }
+.sec-head code { font: 500 0.85rem var(--mono); color: var(--ink-soft); }
+
+/* Traceroute */
+.trace { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.hop {
+  display: grid; grid-template-columns: 3.2rem minmax(0, 1fr) auto; gap: 18px;
+  padding-block: 20px; border-bottom: 1px dashed var(--rule); align-items: start;
+}
+.hop .n { font: 600 1.4rem var(--mono); color: var(--signal); font-variant-numeric: tabular-nums; }
+.hop h3 { font-stretch: 112%; font-weight: 700; font-size: 1.2rem; }
+.hop .where { font: 500 0.85rem var(--mono); color: var(--ink-soft); margin-top: 2px; }
+.hop p { margin: 8px 0 0; max-width: 62ch; }
+.hop .when { font: 500 0.82rem var(--mono); color: var(--ink-soft); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+.hop.next .n { color: var(--ok); }
+.hop.next h3 { color: var(--ok); }
+.stars { letter-spacing: 0.4em; color: var(--ink-soft); }
+
+/* Projects */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.proj {
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 12px;
+  padding: 24px; display: grid; gap: 14px; align-content: start; min-width: 0;
+}
+.proj .top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.proj h3 { font-stretch: 112%; font-weight: 800; font-size: 1.3rem; }
+.metric { font: 600 0.8rem var(--mono); color: var(--signal); white-space: nowrap; }
+.proj p { margin: 0; }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; }
+.stack span { font: 500 0.74rem var(--mono); border: 1px solid var(--rule); border-radius: 5px; padding: 3px 7px; color: var(--ink-soft); }
+.proj ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); }
+.proj ul li { margin-bottom: 4px; }
+.proj .src { font: 600 0.85rem var(--mono); }
+.proj .src.none { color: var(--ink-soft); font-weight: 500; }
+
+/* Toolkit */
+.kit { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 28px 32px; }
+.kit h3 { font: 600 0.8rem var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--signal); margin-bottom: 10px; }
+.kit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.kit li { border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+
+/* Contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.contact h2 { font-stretch: 125%; font-weight: 900; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1; }
+.contact p { color: var(--ink-soft); max-width: 44ch; }
+.cards { display: grid; gap: 12px; }
+.card {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px;
+}
+.card .v { font: 500 0.92rem var(--mono); overflow-wrap: anywhere; min-width: 0; }
+.card a { font: 600 0.85rem var(--mono); }
+.copy { font: 600 0.8rem var(--mono); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
+footer { padding-block: 28px 40px; border-top: 1px solid var(--rule); font: 500 0.8rem var(--mono); color: var(--ink-soft); }
+
+@media (max-width: 820px) {
+  .hero, .contact { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .projects { grid-template-columns: minmax(0, 1fr); }
+  .hop { grid-template-columns: 2.4rem minmax(0, 1fr); }
+  .hop .when { grid-column: 2; text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse { animation: none; }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="handle">samuel@kamloops:~$</div>
+    <nav aria-label="Sections">
+      <a href="#route">route</a>
+      <a href="#projects">projects</a>
+      <a href="#toolkit">toolkit</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <span class="status"><span class="pulse" aria-hidden="true"></span>Open to an 8-month co-op · January 2027</span>
+      <h1>Samuel Akinade<span>IT · Networks · Security</span></h1>
+      <p class="lede">Computer Network and Cybersecurity student at <strong>Thompson Rivers University</strong>. Two years on an IT help desk, hands-on security tools I built myself, and a habit of following procedure from working mine sites in BC.</p>
+      <div class="links">
+        <a class="btn primary" href="https://www.linkedin.com/in/samuel-akinade-528789435" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.05c.53-1 1.83-1.75 3.4-1.75 3.6 0 4.25 2.2 4.25 5.1v6.15h-4v-5.45c0-1.3-.03-2.97-1.8-2.97-1.82 0-2.1 1.42-2.1 2.88v5.54h-4z"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn" href="https://github.com/sammist2" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+          GitHub
+        </a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+    </div>
+
+    <figure class="ping" aria-label="Ping monitor animation">
+      <div class="head"><span>ping co-op.employer.ca</span><span id="seq">seq=0</span></div>
+      <canvas id="spark" width="600" height="220"></canvas>
+      <div class="stats">
+        <div><b id="lat">18 ms</b><span>latency</span></div>
+        <div><b>100%</b><span>uptime</span></div>
+        <div><b>3.83</b><span>GPA / 4.33</span></div>
+      </div>
+    </figure>
+  </div>
+
+  <section id="route">
+    <div class="sec-head">
+      <h2>The route so far</h2>
+      <code>$ traceroute samuel --from lagos</code>
+    </div>
+    <ol class="trace">
+      <li class="hop">
+        <span class="n">01</span>
+        <div>
+          <h3>IT Help Desk Tier 1</h3>
+          <div class="where">Neobot Tech · Lagos, Nigeria</div>
+          <p>Worked the ticket queue, escalated what needed senior eyes, and managed Microsoft 365 and Entra ID accounts, MFA and permissions. Set up and reimaged laptops and phones, tracked IT assets, and wrote the how-to guides users actually read.</p>
+        </div>
+        <span class="when">2021 – 2023</span>
+      </li>
+      <li class="hop">
+        <span class="n">02</span>
+        <div>
+          <h3>Confined Space Watch</h3>
+          <div class="where">On-call contracts · New Gold, Highland Valley Copper, Kruger</div>
+          <p>Called in for shutdowns and maintenance at mines and mills. Enforced Lockout/Tagout, monitored gas detectors, logged every entry and exit, and coordinated evacuations when it counted.</p>
+        </div>
+        <span class="when">2024 – 2026</span>
+      </li>
+      <li class="hop">
+        <span class="n">03</span>
+        <div>
+          <h3>Support Services Worker</h3>
+          <div class="where">Interior Health Authority · Kamloops, BC</div>
+          <p>Prepared patient meal trays to exact diet orders and trained new team members on safety procedures.</p>
+        </div>
+        <span class="when">2024 – now</span>
+      </li>
+      <li class="hop">
+        <span class="n">04</span>
+        <div>
+          <h3>Information Desk Volunteer</h3>
+          <div class="where">Royal Inland Hospital · Kamloops, BC</div>
+          <p>Helped patients and families at a busy front desk, looked up patient records under hospital privacy rules, and onboarded new volunteers.</p>
+        </div>
+        <span class="when">2025 – now</span>
+      </li>
+      <li class="hop">
+        <span class="n">05</span>
+        <div>
+          <h3>Diploma in Computer Network and Cybersecurity</h3>
+          <div class="where">Thompson Rivers University · GPA 3.83/4.33</div>
+          <p>Cisco networking, network security, Windows Server and Active Directory, Linux, scripting, and Security Operations &amp; Incident Response. CompTIA Security+ in progress.</p>
+        </div>
+        <span class="when">2025 – 2028</span>
+      </li>
+      <li class="hop next">
+        <span class="n">06</span>
+        <div>
+          <h3>Your team</h3>
+          <div class="where"><span class="stars">* * *</span> awaiting reply</div>
+          <p>Available for an 8-month co-op from January 2027, anywhere in Canada. IT support, networking or security.</p>
+        </div>
+        <span class="when">Jan 2027</span>
+      </li>
+    </ol>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head">
+      <h2>Projects</h2>
+      <code>$ ls ~/projects</code>
+    </div>
+    <div class="projects">
+      <article class="proj">
+        <div class="top"><h3>AI Inbox &amp; Invoice Triage Agent</h3><span class="metric">105 test cases</span></div>
+        <p>An agent that reads emails and invoice PDFs, decides what each one is, and opens a support ticket. Only phishing, suspicious files and mismatched invoices reach a person.</p>
+        <ul>
+          <li>49 automated tests, plus an evaluation harness scoring accuracy, speed and cost</li>
+          <li>GitHub Actions CI lints and tests every push on Python 3.11 to 3.13</li>
+          <li>Runs on local models, so business data stays on the network</li>
+        </ul>
+        <div class="stack"><span>Python</span><span>Flask</span><span>SQLite</span><span>Ollama</span><span>vLLM</span><span>GitHub Actions</span></div>
+        <a class="src" href="https://github.com/sammist2/invoice-triage-agent" target="_blank" rel="noopener">View code on GitHub →</a>
+      </article>
+
+      <article class="proj">
+        <div class="top"><h3>Phish &amp; Malware Guard</h3><span class="metric">Outlook add-in</span></div>
+        <p>Scans an opened email for malicious code, suspicious URLs and phishing language, warns the user inside Outlook, and forwards confirmed threats to the security team.</p>
+        <ul>
+          <li>JavaScript front end built with Office.js</li>
+          <li>Python FastAPI back end with Pydantic validation</li>
+          <li>Reports threats automatically through the Microsoft Graph API</li>
+        </ul>
+        <div class="stack"><span>JavaScript</span><span>Office.js</span><span>Python</span><span>FastAPI</span><span>Graph API</span></div>
+        <a class="src" href="https://github.com/sammist2/phish-malware-guard" target="_blank" rel="noopener">View code on GitHub →</a>
+      </article>
+
+      <article class="proj">
+        <div class="top"><h3>Ping Monitor</h3><span class="metric">10 hosts at once</span></div>
+        <p>A desktop tool that watches network devices, charts latency and uptime live, and sends an email and sound alert the moment a device drops.</p>
+        <ul>
+          <li>Background threads keep every host checked while the app stays responsive</li>
+          <li>Email alerts through smtplib, settings saved as JSON</li>
+        </ul>
+        <div class="stack"><span>Python</span><span>tkinter</span><span>threading</span><span>smtplib</span></div>
+        <span class="src none">Built before I started using GitHub</span>
+      </article>
+
+      <article class="proj">
+        <div class="top"><h3>Network Intrusion Detection System</h3><span class="metric">4-node lab</span></div>
+        <p>A Cisco lab that detects and blocks unauthorized hosts and records every attempt.</p>
+        <ul>
+          <li>Named extended ACLs with deny logging</li>
+          <li>Syslog alerts with each intruder's source IP, protocol and destination</li>
+          <li>Tested by simulating unknown hosts until every attempt was blocked and logged</li>
+        </ul>
+        <div class="stack"><span>Cisco Modeling Labs</span><span>Cisco IOS</span><span>ACLs</span><span>Syslog</span></div>
+        <span class="src none">Built before I started using GitHub</span>
+      </article>
+    </div>
+  </section>
+
+  <section id="toolkit">
+    <div class="sec-head">
+      <h2>Toolkit</h2>
+      <code>$ cat skills.conf</code>
+    </div>
+    <div class="kit">
+      <div>
+        <h3>Security</h3>
+        <ul><li>Splunk (SIEM)</li><li>Snort (IDS)</li><li>Wireshark</li><li>Nmap</li><li>Metasploit</li><li>Incident response</li></ul>
+      </div>
+      <div>
+        <h3>Networking</h3>
+        <ul><li>Cisco IOS</li><li>ACLs and Syslog</li><li>Packet Tracer</li><li>Cisco Modeling Labs</li><li>Wi-Fi and VPN troubleshooting</li></ul>
+      </div>
+      <div>
+        <h3>Systems</h3>
+        <ul><li>Microsoft 365</li><li>Entra ID and Intune</li><li>Active Directory</li><li>Windows and Windows Server</li><li>Linux</li><li>AWS</li></ul>
+      </div>
+      <div>
+        <h3>Code</h3>
+        <ul><li>Python</li><li>PowerShell and Bash</li><li>SQL</li><li>JavaScript</li><li>Git, GitHub Actions</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact">
+      <div>
+        <h2>Let's talk.</h2>
+        <p>Hiring a co-op student for January 2027? I'd like to hear about your team. Kamloops based and happy to relocate anywhere in Canada.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <span class="v" id="email">Akinadesamuel140@gmail.com</span>
+          <button class="copy" id="copyEmail" type="button">Copy email</button>
+        </div>
+        <div class="card">
+          <span class="v">linkedin.com/in/samuel-akinade-528789435</span>
+          <a href="https://www.linkedin.com/in/samuel-akinade-528789435" target="_blank" rel="noopener">Open →</a>
+        </div>
+        <div class="card">
+          <span class="v">github.com/sammist2</span>
+          <a href="https://github.com/sammist2" target="_blank" rel="noopener">Open →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Samuel Akinade · Kamloops, BC · last hop updated November 2026</footer>
+</div>
+
+<script>
+(function () {
+  // Copy email
+  var btn = document.getElementById('copyEmail');
+  btn.addEventListener('click', function () {
+    var text = document.getElementById('email').textContent.trim();
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy email'; }, 1800); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, select);
+    } else { select(); }
+    function select() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Press Ctrl+C';
+    }
+  });
+
+  // Ping sparkline (a nod to the Ping Monitor project)
+  var c = document.getElementById('spark'), ctx = c.getContext('2d');
+  var lat = document.getElementById('lat'), seqEl = document.getElementById('seq');
+  var data = [], seq = 0, N = 48;
+  for (var i = 0; i < N; i++) data.push(14 + Math.random() * 10);
+  function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+  function draw() {
+    var w = c.width, h = c.height, pad = 16;
+    ctx.clearRect(0, 0, w, h);
+    var ink = css('--rule'), sig = css('--signal');
+    ctx.strokeStyle = ink; ctx.lineWidth = 1;
+    for (var g = 1; g < 4; g++) { var y = pad + (h - 2 * pad) * g / 4; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+    var max = 40, min = 0;
+    var pts = data.map(function (v, i) { return [i * (w / (N - 1)), h - pad - (v - min) / (max - min) * (h - 2 * pad)]; });
+    ctx.beginPath(); pts.forEach(function (p, i) { i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); });
+    ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
+    ctx.fillStyle = css('--signal-soft'); ctx.fill();
+    ctx.beginPath(); pts.forEach(function (p, i) { i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); });
+    ctx.strokeStyle = sig; ctx.lineWidth = 3; ctx.stroke();
+    var last = pts[pts.length - 1];
+    ctx.beginPath(); ctx.arc(last[0] - 4, last[1], 6, 0, Math.PI * 2); ctx.fillStyle = sig; ctx.fill();
+  }
+  draw();
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    setInterval(function () {
+      var v = Math.max(8, Math.min(34, data[data.length - 1] + (Math.random() - 0.5) * 8));
+      data.push(v); data.shift(); seq++;
+      lat.textContent = Math.round(v) + ' ms'; seqEl.textContent = 'seq=' + seq;
+      draw();
+    }, 1000);
+  }
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+})();
+</script>
+
+</body>
+</html>
